@@ -1,22 +1,31 @@
-# Understanding and Improving Early Stopping for Learning with Noisy Labels
+# Visualize Model with GradCAM and Super-Resolution
+Visualizing the model for the following paper at NeurIPS 2021 and ECCV 2022
+## [Understanding and Improving Early Stopping for Learning with Noisy Labels](https://github.com/tmllab/PES) 
+## [From Face to Natural Image: Learning Real Degradation for Blind Image Super-Resolution](https://github.com/csxmli2016/ReDegNet)
 
-PyTorch Code for the following paper at NeurIPS 2021:\
-<b>Title</b>: Understanding and Improving Early Stopping for Learning with Noisy Labels \
-<b>Authors</b>: Yingbin Bai*, Erkun Yang*, Bo Han, Yanhua Yang, Jiatong Li, Yinian Mao, Gang Niu, and Tongliang Liu
-
-
+![gradcam](test.jpg)
 ## Experiments
 
-To install requirements:
-
-```setup
+1. Setup Environments:
+```
+git clone https://github.com/Waterkin/PES_ReDegNet_GradCAM.git
+conda create -n noisy python=3.8
+conda activate noisy
 pip install -r requirements.txt
+cd ReDegNet
+python setup.py develop
 ```
 
-> 📋 Please download and place all datasets into the data directory. For Clohting1M, please run "python ClothingData.npy" to generate a data file.
+> 📋 Please download and place all datasets into the data directory. For cifar10, download it by yourself.
 
-To train PES without semi on CIFAR-10/100
-
+2. To train PES on CIFAR-10/100:
 ```
-python PES_cs.py --dataset cifar10 --noise_type symmetric --noise_rate 0.5
+python PES_semi.py --dataset cifar10 --noise_type symmetric --noise_rate 0.5
+python PES_semi.py --dataset cifar10 --noise_type instance --noise_rate 0.4  --lambda_u 15
+python PES_semi.py --dataset cifar100 --noise_type pairflip --noise_rate 0.45  --lambda_u 50
+```
+
+3. To generate GradCAM images:
+```
+python flask_cam.py
 ```
